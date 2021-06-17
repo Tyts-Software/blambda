@@ -4,13 +4,12 @@ Modular, serverless aproach to build Progressive Web Applications (PWA) and not 
 
 Welcome to proof of concept journey! 
 
+## Getting Started
+
 ```
 Goal: Find out one more solution for building serverless, modular PWA.
 Main assumption: Let's say it would be Blazor for UI and AWS Lambda for BL.
 ```
-
-## Getting Started
-
 
 
 ## Assumptions
