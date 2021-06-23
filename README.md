@@ -16,4 +16,4 @@ Main assumption: Let's say it would be Blazor for UI and AWS Lambda for BL.
 
 | Assumption | POC |
 | ----- | ---- |
-| [Assumption #0](/docs/00-host-blazor-on-s3.md) | It should be Blazor (WebAssembly) app hosted on S3 |
+| [Assumption #0](https://github.com/Tyts-Software/blambda/tree/master/poc/00-host-blazor-on-s3) | It should be Blazor (WebAssembly) app hosted on S3 |
