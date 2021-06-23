@@ -32,6 +32,6 @@ you should
 8. browse http://[your-domain].s3-website.eu-central-1.amazonaws.com
 
 ## TODO:
-1. routing/redirections for non root pages. like this http://[your-domain].s3-website.eu-central-1.amazonaws.com/counter
-2. authentication
-3. deny bucket listing (https://[your-domain].s3.amazonaws.com)
+- [ ] use routing/redirections for non root pages. like this http://[your-domain].s3-website.eu-central-1.amazonaws.com/counter
+- [ ] add authentication
+- [ ] deny bucket listing (https://[your-domain].s3.amazonaws.com)
