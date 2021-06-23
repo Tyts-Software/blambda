@@ -1,0 +1,70 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "BLambda stack: CloudFront distribution with a S3 origin",
+    "Parameters": {
+        "RootDomainName": {
+            "Type": "String",
+            "Description": "Domain name for your website (example.com)"
+        }
+    },
+
+    "Resources": {
+        "RootBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName" : {"Ref":"RootDomainName"},
+                "AccessControl" : "PublicRead",
+                "WebsiteConfiguration": {
+                    "IndexDocument":"index.html"
+                }
+            }
+        },
+
+        "S3BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Metadata": {
+                "Comment": "Bucket policy to allow cloudfront to access the data"
+            },
+            "Properties": {
+                "Bucket": {
+                    "Ref": "RootDomainName"
+                },
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": "*",
+                            "Resource": [
+                                {
+                                    "Fn::Sub": "arn:aws:s3:::${RootDomainName}/*"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+
+
+    "Outputs": {
+        "S3BucketName": {
+            "Description": "Bucket name",
+            "Value": {
+                "Ref": "RootDomainName"
+            }
+        },
+        "WebsiteURL" : {
+            "Value" : { "Fn::GetAtt" : [ "RootBucket", "WebsiteURL" ] },
+            "Description" : "URL for website hosted on S3"
+        },
+
+        "S3BucketSecureURL" : {
+            "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "RootBucket", "DomainName" ] } ] ] },
+            "Description" : "Name of S3 bucket to hold website content"
+        }
+    }
+}
