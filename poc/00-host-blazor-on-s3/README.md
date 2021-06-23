@@ -1,19 +1,37 @@
-# Blazor + AWS Lambda = BLambda
+# Assumption #0 Blazor can be hosted on S3
 
-Modular, serverless aproach to build Progressive Web Applications (PWA) and not only, presented by WebAssembly hosted Blazor and served by AWS.
+Here is just "Hello world" Blazor app that will be deployed on S3.
 
-Welcome to proof of concept journey! 
+## In order to prove
 
-## Getting Started
-
+you should
+1. Install VS
+2. Install AWS Toolkit
+3. Create AWS Account
+4. Add IAM 'dev' with permissions
 ```
-Goal: Find out one more solution for building serverless, modular PWA.
-Main assumption: Let's say it would be Blazor for UI and AWS Lambda for BL.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "cloudformation:*",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        }
+    ]
+}
 ```
+5. create local profile for 'blambda-dev' (use aws_access_key_id and aws_secret_access_key from 'dev')
+[Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+6. fire deploy-stack.ps1
+7. browse http://[your-domain].s3-website.eu-central-1.amazonaws.com
 
-
-## Assumptions
-
-| Assumption | POC |
-| ----- | ---- |
-| [Assumption #0](/docs/00-host-blazor-on-s3.md) | It should be Blazor (WebAssembly) app hosted on S3 |
+## TODO:
+1. routing/redirections for non root pages. like this http://[your-domain].s3-website.eu-central-1.amazonaws.com/counter
+2. authentication
+3. deny bucket listing (https://[your-domain].s3.amazonaws.com)
