@@ -1,23 +1,23 @@
-param ($profile='blambda-dev', $domain='blambda', $buildConfig='Release')
+param ($profile='blambda-dev', $domain='blambda', $configuration='Release')
 
 ### Create Stack
 aws --profile $profile `
 		cloudformation create-stack `
 			--stack-name "$domain-stack" `
-			--template-body file://./src/Tyts.Aws.Templates/blambda-stack.template `
+			--template-body file://./src/BLambda.Templates/blambda-stack.template `
 			--parameters ParameterKey=RootDomainName,ParameterValue=$domain `
 						 #ParameterKey=Parm2,ParameterValue=test2 `
 
 
 ### Publish frontend
 $deploy = ".\_deploy\shall"
-$shall = ".\src\Tyts.Shall"
+$shall = ".\src\BLambda.Shall"
 
 
 # create folder to publish locally
 New-Item -Path $deploy -ItemType Directory -Force
 # rebuild and publish 
-dotnet publish $shall --output $deploy -c $buildConfig 
+dotnet publish $shall --output $deploy -c $configuration 
 
 
 # wait until bucket exist

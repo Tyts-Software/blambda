@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyts.Shall", "Tyts.Shall\Tyts.Shall.csproj", "{FF096C84-16D2-4DBB-B599-0569EDDCC75F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Shall", "Tyts.Shall\BLambda.Shall.csproj", "{FF096C84-16D2-4DBB-B599-0569EDDCC75F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{595273AF-2810-4A98-9A59-778BB3AED32E}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,7 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\publish.ps1 = ..\publish.ps1
 	EndProjectSection
 EndProject
-Project("{22325025-CDA3-4736-83CB-2D32D2FCC215}") = "Tyts.Aws.Templates", "Tyts.Aws.Templates\Tyts.Aws.Templates.cfproj", "{99999999-9999-9999-9999-999999999999}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Will", "BLambda.Will\BLambda.Will.csproj", "{D940B10E-F9F6-4BA5-A319-83761F157633}"
+EndProject
+Project("{22325025-CDA3-4736-83CB-2D32D2FCC215}") = "BLambda.Templates", "BLambda.Templates\BLambda.Templates.cfproj", "{99999999-9999-9999-9999-999999999999}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{98A8DE46-0F51-4763-AC94-1465137EB3A7}"
+	ProjectSection(SolutionItems) = preProject
+		..\poc\00-host-blazor-on-s3\00-host-blazor-on-s3.md = ..\poc\00-host-blazor-on-s3\00-host-blazor-on-s3.md
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +39,14 @@ Global
 		{FF096C84-16D2-4DBB-B599-0569EDDCC75F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF096C84-16D2-4DBB-B599-0569EDDCC75F}.Release|x86.ActiveCfg = Release|Any CPU
 		{FF096C84-16D2-4DBB-B599-0569EDDCC75F}.Release|x86.Build.0 = Release|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Debug|x86.Build.0 = Debug|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|x86.ActiveCfg = Release|Any CPU
+		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|x86.Build.0 = Release|Any CPU
 		{99999999-9999-9999-9999-999999999999}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{99999999-9999-9999-9999-999999999999}.Debug|x86.ActiveCfg = Debug|x86
 		{99999999-9999-9999-9999-999999999999}.Debug|x86.Build.0 = Debug|x86

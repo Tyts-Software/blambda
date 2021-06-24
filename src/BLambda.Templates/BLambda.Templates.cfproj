@@ -3,9 +3,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{99999999-9999-9999-9999-999999999999}</ProjectGuid>
-    <AssemblyName>SetupS3Template</AssemblyName>
-    <Name>Tyts.Aws.Templates</Name>
-    <RootNamespace>Tyts.Aws.Templates</RootNamespace>
+    <AssemblyName>BLambda.Templates</AssemblyName>
+    <Name>BLambda.Templates</Name>
+    <RootNamespace>BLambda.Templates</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Experimental LocalAppData -->
@@ -13,6 +13,16 @@
     <!-- Integrated Shell -->
     <CloudFormationPath Condition=" '$(CloudFormationPath)' == '' AND Exists('$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010\cloudformation.targets')">$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010</CloudFormationPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="blambda-shall.template">
+      <SubType>Code</SubType>
+    </Compile>	
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="blambda-will.template">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="blambda-stack.template">
       <SubType>Code</SubType>
