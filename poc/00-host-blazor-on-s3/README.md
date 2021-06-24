@@ -34,4 +34,3 @@ you should
 ## TODO:
 - [ ] use routing/redirections for non root pages. like this http://[your-domain].s3-website.eu-central-1.amazonaws.com/counter
 - [ ] add authentication
-- [ ] deny bucket listing (https://[your-domain].s3.amazonaws.com)
