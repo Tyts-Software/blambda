@@ -14,12 +14,19 @@
     <CloudFormationPath Condition=" '$(CloudFormationPath)' == '' AND Exists('$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010\cloudformation.targets')">$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010</CloudFormationPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="blambda-hola.template">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="blambda-init.template">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="blambda-shall.template">
       <SubType>Code</SubType>
-    </Compile>	
-  </ItemGroup>
-  <ItemGroup>
+    </Compile>
     <Compile Include="blambda-will.template">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_tmp.template">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

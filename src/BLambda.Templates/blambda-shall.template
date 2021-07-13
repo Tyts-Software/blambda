@@ -1,23 +1,26 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "BLambda stack: CloudFront distribution with a S3 origin",
+    "Transform": "AWS::Serverless-2016-10-31",
+    "Description": "UI: BLambda stack: AWS Serverless Blazor UI Application with CloudFront distribution and S3 origin",
     "Parameters": {
-        "RootDomainName": {
+        "DomainName": {
             "Type": "String",
-            "Description": "Domain name for your website (example.com)"
+            "Description": "Domain name for your website (example.com)",
+            "Default": "blambda"
         }
     },
 
     "Resources": {
-        "RootBucket": {
+        "WWWBucket": {
             "Type": "AWS::S3::Bucket",
-            "Properties": {
-                "BucketName": {"Ref":"RootDomainName"},
+            "Properties": {                
+                "BucketName": {"Fn::Sub": "${DomainName}-www"},
+
                 "Tags": [
                     {"Key": "blambda"}
                 ],
                 "AccessControl": "Private",
-                "WebsiteConfiguration": {
+                "WebsiteConfiguration": {               
                     "IndexDocument":"index.html"
                 }
             }
@@ -30,7 +33,7 @@
             },
             "Properties": {
                 "Bucket": {
-                    "Ref": "RootDomainName"
+                    "Ref": "WWWBucket"
                 },
                 "PolicyDocument": {
                     "Statement": [
@@ -42,7 +45,7 @@
                             "Principal": "*",
                             "Resource": [
                                 {
-                                    "Fn::Sub": "arn:aws:s3:::${RootDomainName}/*"
+                                    "Fn::Sub": [ "arn:aws:s3:::${WWWBucket}/*", { "WWWBucket": {"Ref" : "WWWBucket" }} ]
                                 }
                             ]
                         }
@@ -54,19 +57,19 @@
 
 
     "Outputs": {
-        "S3BucketName": {
-            "Description": "Bucket name",
+        "UIBucketName": {
             "Value": {
-                "Ref": "RootDomainName"
-            }
+                "Ref": "WWWBucket"
+            },
+            "Description": "UI bucket name"            
         },
-        "WebsiteURL" : {
-            "Value" : { "Fn::GetAtt" : [ "RootBucket", "WebsiteURL" ] },
+        "UIURL" : {
+            "Value" : { "Fn::GetAtt" : [ "WWWBucket", "WebsiteURL" ] },
             "Description" : "URL for website hosted on S3"
         },
 
-        "S3BucketSecureURL" : {
-            "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "RootBucket", "DomainName" ] } ] ] },
+        "UIBucketSecureURL" : {
+            "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "WWWBucket", "DomainName" ] } ] ] },
             "Description" : "Name of S3 bucket to hold website content"
         }
     }

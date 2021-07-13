@@ -1,73 +1,74 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "BLambda stack: CloudFront distribution with a S3 origin",
+    "Transform": "AWS::Serverless-2016-10-31",
+    "Description": "ROOT: BLambda stack is a serverless application with Blazor UI and Event Driven backend",
     "Parameters": {
-        "RootDomainName": {
+        "AppName": {
+            "Type": "String",
+            "Description": "Domain name for your website (example.com)",
+            "Default": "blambda"
+        },
+
+        "UIDomainName": {
             "Type": "String",
             "Description": "Domain name for your website (example.com)"
+        },
+
+        "WebApiDomainName": {
+            "Type": "String",
+            "Description": "Domain name for your REST API (api.example.com)"
+        },
+
+        "LogLevel": {
+            "Type": "String",
+            "Description": "Log level for Lambda function logging, e.g., ERROR, INFO, DEBUG, etc",
+            "Default": "INFO"
         }
     },
 
-    "Resources": {
-        "RootBucket": {
-            "Type": "AWS::S3::Bucket",
-            "Properties": {
-                "BucketName": {"Ref":"RootDomainName"},
-                "Tags": [
-                    {"Key": "blambda"}
-                ],
-                "AccessControl": "Private",
-                "WebsiteConfiguration": {
-                    "IndexDocument":"index.html"
+    "Resources": {        
+       
+       "WebApi": {
+            "Type": "AWS::Serverless::Application",
+            "Properties": {                
+                "Location": "blambda-will.template",
+                "Parameters": {
+                    "DomainName": {
+                        "Ref": "WebApiDomainName"
+                    },
+                    "LogLevel": {
+                        "Ref": "LogLevel"
+                    }
                 }
             }
         },
 
-        "S3BucketPolicy": {
-            "Type": "AWS::S3::BucketPolicy",
-            "Metadata": {
-                "Comment": "Bucket policy to allow cloudfront to access the data"
-            },
-            "Properties": {
-                "Bucket": {
-                    "Ref": "RootDomainName"
-                },
-                "PolicyDocument": {
-                    "Statement": [
-                        {
-                            "Action": [
-                                "s3:GetObject"
-                            ],
-                            "Effect": "Allow",
-                            "Principal": "*",
-                            "Resource": [
-                                {
-                                    "Fn::Sub": "arn:aws:s3:::${RootDomainName}/*"
-                                }
-                            ]
-                        }
-                    ]
+       "HolaMundoApi": {
+            "Type": "AWS::Serverless::Application",
+            "Properties": {                
+                "Location": "blambda-hola.template",
+                "Parameters": {
+                    "DomainName": { "Fn::Sub": "hola-mundo.${AppName}" },
+                    "LogLevel": {
+                        "Ref": "LogLevel"
+                    }
                 }
             }
         }
+
     },
-
-
-    "Outputs": {
-        "S3BucketName": {
-            "Description": "Bucket name",
-            "Value": {
-                "Ref": "RootDomainName"
+    "Outputs"                  : {
+        "WebApiURL" : {
+            "Description" : "Web API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : "https://${WebApi}.execute-api.${AWS::Region}.amazonaws.com/"
             }
         },
-        "WebsiteURL" : {
-            "Value" : { "Fn::GetAtt" : [ "RootBucket", "WebsiteURL" ] },
-            "Description" : "URL for website hosted on S3"
-        },
-
-        "S3BucketSecureURL" : {
-            "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "RootBucket", "DomainName" ] } ] ] },
-            "Description" : "Name of S3 bucket to hold website content"
+        "HolaMundoApiURL" : {
+            "Description" : "HolaMundo Http API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : "https://${HolaMundoApi}.execute-api.${AWS::Region}.amazonaws.com/"
+            }
         }
     }
 }
