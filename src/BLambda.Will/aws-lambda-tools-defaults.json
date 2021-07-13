@@ -5,11 +5,21 @@
     "dotnet lambda help",
     "All the command line options for the Lambda command can be specified in this file."
   ],
-  "profile": "blambda-dev",
+  "profile": "",
   "region": "",
+  "stack-name": "",
+  "s3-bucket": "",
+  "s3-prefix": "",
   "configuration": "Release",
-  "s3-prefix": "BLambda.Will/",
-  "template": "../BLambda.Temlates/blambda-will.template",
-  "template-parameters": "",
-  "docker-host-build-output-dir": "./bin/Release/net5.0/linux-x64/publish"
+  "framework": "net5.0",
+  "function-runtime": "provided",
+  "function-memory-size": 128,
+  "function-timeout": 10,
+  "function-name": "BLambda-Will",
+  "function-handler": "not_required_for_custom_runtime",
+  "template": "../BLambda.Templates/blambda-will.template",
+  "msbuild-parameters": "--self-contained true",
+  "tracing-mode": "PassThrough",
+  "environment-variables": "",
+  "template-parameters": "\"DomainName\"=\"api.blambda\";\"LogLevel\"=\"INFO\""
 }

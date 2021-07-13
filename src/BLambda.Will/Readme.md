@@ -36,45 +36,6 @@ Application Load Balancer.
 
 You may also have a test project depending on the options selected.
 
-## Packaging as a Docker image.
-
-This project is configured to package the Lambda function as a Docker image. The default configuration for the project and the Dockerfile is to build 
-the .NET project on the host machine and then execute the `docker build` command which copies the .NET build artifacts from the host machine into 
-the Docker image. 
-
-The `--docker-host-build-output-dir` switch, which is set in the `aws-lambda-tools-defaults.json`, triggers the 
-AWS .NET Lambda tooling to build the .NET project into the directory indicated by `--docker-host-build-output-dir`. The Dockerfile 
-has a **COPY** command which copies the value from the directory pointed to by `--docker-host-build-output-dir` to the `/var/task` directory inside of the 
-image.
-
-Alternatively the Docker file could be written to use [multi-stage](https://docs.docker.com/develop/develop-images/multistage-build/) builds and 
-have the .NET project built inside the container. Below is an example of building .NET 5 project inside the image.
-
-```dockerfile
-FROM ecr.aws/lambda/dotnet:5.0 AS base
-
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
-WORKDIR /src
-COPY ["BLambda.Will.csproj", "BLambda.Will/"]
-RUN dotnet restore "BLambda.Will/BLambda.Will.csproj"
-
-WORKDIR "/src/BLambda.Will"
-COPY . .
-RUN dotnet build "BLambda.Will.csproj" --configuration Release --output /app/build
-
-FROM build AS publish
-RUN dotnet publish "BLambda.Will.csproj" \
-            --configuration Release \ 
-            --runtime linux-x64 \
-            --self-contained false \ 
-            --output /app/publish \
-            -p:PublishReadyToRun=true  
-
-FROM base AS final
-WORKDIR /var/task
-COPY --from=publish /app/publish .
-```
-
 ## Here are some steps to follow from Visual Studio:
 
 To deploy your Serverless application, right click the project in Solution Explorer and select *Publish to AWS Lambda*.
@@ -97,12 +58,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "BLambda.Will/test/BLambda.Will.Tests"
+    cd "AWSServerless1/test/AWSServerless1.Tests"
     dotnet test
 ```
 
 Deploy application
 ```
-    cd "BLambda.Will/src/BLambda.Will"
+    cd "AWSServerless1/src/AWSServerless1"
     dotnet lambda deploy-serverless
 ```
