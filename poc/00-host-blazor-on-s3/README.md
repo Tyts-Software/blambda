@@ -8,7 +8,7 @@ you should
 1. [Install VS](https://visualstudio.microsoft.com/)
 2. [Install AWS Toolkit](https://aws.amazon.com/visualstudio/)
 3. [Install AWS CLI](https://aws.amazon.com/cli/)
-4. [Create AWS Account] (https://aws.amazon.com/resources/create-account/)
+4. [Create AWS Account](https://aws.amazon.com/resources/create-account/)
 5. Add [IAM](https://aws.amazon.com/iam/) user 'dev' with permissions
 ```
 {

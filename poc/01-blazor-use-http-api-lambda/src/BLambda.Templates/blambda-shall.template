@@ -1,0 +1,76 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Transform": "AWS::Serverless-2016-10-31",
+    "Description": "UI: BLambda stack: AWS Serverless Blazor UI Application with CloudFront distribution and S3 origin",
+    "Parameters": {
+        "DomainName": {
+            "Type": "String",
+            "Description": "Domain name for your website (example.com)",
+            "Default": "blambda"
+        }
+    },
+
+    "Resources": {
+        "WWWBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {                
+                "BucketName": {"Fn::Sub": "${DomainName}-www"},
+
+                "Tags": [
+                    {"Key": "blambda"}
+                ],
+                "AccessControl": "Private",
+                "WebsiteConfiguration": {               
+                    "IndexDocument":"index.html"
+                }
+            }
+        },
+
+        "S3BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Metadata": {
+                "Comment": "Bucket policy to allow cloudfront to access the data"
+            },
+            "Properties": {
+                "Bucket": {
+                    "Ref": "WWWBucket"
+                },
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": "*",
+                            "Resource": [
+                                {
+                                    "Fn::Sub": [ "arn:aws:s3:::${WWWBucket}/*", { "WWWBucket": {"Ref" : "WWWBucket" }} ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+
+
+    "Outputs": {
+        "UIBucketName": {
+            "Value": {
+                "Ref": "WWWBucket"
+            },
+            "Description": "UI bucket name"            
+        },
+        "UIURL" : {
+            "Value" : { "Fn::GetAtt" : [ "WWWBucket", "WebsiteURL" ] },
+            "Description" : "URL for website hosted on S3"
+        },
+
+        "UIBucketSecureURL" : {
+            "Value" : { "Fn::Join" : [ "", [ "https://", { "Fn::GetAtt" : [ "WWWBucket", "DomainName" ] } ] ] },
+            "Description" : "Name of S3 bucket to hold website content"
+        }
+    }
+}

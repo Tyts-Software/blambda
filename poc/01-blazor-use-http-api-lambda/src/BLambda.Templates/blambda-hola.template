@@ -1,0 +1,88 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Transform"                : "AWS::Serverless-2016-10-31",
+    "Description"              : "Hola Mundo API (netcoreapp3.1): BLambda stack: AWS Serverless Web API Application that uses the ASP.NET Core framework running in Amazon Lambda. ",
+    "Parameters"               : {
+        "DomainName" : {
+            "Type" : "String",
+            "Description" : "Domain name for your REST API (api.example.com)",
+            "Default"     : "api.blambda"
+        },
+        "LogLevel"   : {
+            "Type" : "String",
+            "Description" : "Log level for Lambda function logging, e.g., ERROR, INFO, DEBUG, etc",
+            "Default"     : "INFO"
+        }
+    },
+    "Resources": {
+        
+        "ApiFunction"     : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties" : {
+                "Handler" : "BLambda.HolaMundo::BLambda.HolaMundo.LambdaEntryPoint::FunctionHandlerAsync",
+                "Runtime" : "dotnetcore3.1",
+                "CodeUri" : "../BLambda.HolaMundo/bin/Release/netcoreapp3.1/BLambda.HolaMundo.zip",
+                "MemorySize" : 128,
+                "Timeout"    : 10,
+                "Role"       : null,
+                "DeploymentPreference" : {
+                },
+
+                "Policies"             : [
+                    "AWSLambda_FullAccess"
+                ],
+
+                "Events"               : {
+                    "ProxyResource" : {
+                        "Type" : "HttpApi",
+                        "Properties" : {
+                            "ApiId" : {"Ref" : "HttpApi"},
+                            "Path" : "/{proxy+}",
+                            "Method" : "ANY"
+                        }
+                    },
+                    "RootResource"  : {
+                        "Type" : "HttpApi",
+                        "Properties" : {
+                            "ApiId" : {"Ref" : "HttpApi"},
+                            "Path" : "/",
+                            "Method" : "ANY"
+                        }
+                    }
+                },
+
+                "Tags": {
+                    "SERVICE":  "blambda-hola",
+                    "TRIGGER":  "gateway",
+                    "ROUTE":    { "Fn::Sub" : "${DomainName}/+" }
+                }
+            }
+        },
+
+        "HttpApi":{
+            "Type" : "AWS::Serverless::HttpApi",
+            "Properties" : {
+                "AccessLogSettings": {
+                    "DestinationArn": { "Fn::GetAtt" : ["AccessLog", "Arn"]},
+                    "Format": "{\"requestId\":\"$context.requestId\", \"ip\": \"$context.identity.sourceIp\", \"caller\":\"$context.identity.caller\", \"user\":\"$context.identity.user\",\"requestTime\":\"$context.requestTime\", \"routeKey\":\"$context.routeKey\", \"status\":\"$context.status\"}"
+                }
+            }
+        },
+
+        "AccessLog" : {
+            "Type" : "AWS::Logs::LogGroup",
+            "Properties" : {
+                "RetentionInDays" : 7
+            }
+        }
+
+    },
+    "Outputs"                  : {
+        "ApiURL" : {
+            "Description" : "API endpoint URL for Prod environment",
+            "Value"       : {
+                "Fn::Sub" : "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+            }
+        }
+    }
+}

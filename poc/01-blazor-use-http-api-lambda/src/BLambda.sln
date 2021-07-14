@@ -18,6 +18,7 @@ Project("{22325025-CDA3-4736-83CB-2D32D2FCC215}") = "BLambda.Templates", "BLambd
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{98A8DE46-0F51-4763-AC94-1465137EB3A7}"
 	ProjectSection(SolutionItems) = preProject
+		..\poc\00-host-blazor-on-s3\00-host-blazor-on-s3.md = ..\poc\00-host-blazor-on-s3\00-host-blazor-on-s3.md
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject

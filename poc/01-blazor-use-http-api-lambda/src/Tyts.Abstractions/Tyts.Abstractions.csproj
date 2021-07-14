@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageOutputDir></PackageOutputDir>
+  </PropertyGroup>
+
+	<Target Name="CopyPackage" AfterTargets="Pack">
+		<Copy
+		  SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg"
+		  DestinationFolder="c:\Work\My\nuget.local\" />
+	</Target>
+</Project>
