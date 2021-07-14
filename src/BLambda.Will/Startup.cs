@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 
 namespace BLambda.Will
 {
@@ -41,6 +42,14 @@ namespace BLambda.Will
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var uiHost = env.IsDevelopment() 
+                ? "http://localhost:5000" 
+                : "http://blambda-www.s3-website.eu-central-1.amazonaws.com";
+            app.UseCors(policy =>
+                    policy.WithOrigins(uiHost)
+                          .AllowAnyMethod()
+                          .WithHeaders(HeaderNames.ContentType));
 
             app.UseHttpsRedirection();
 

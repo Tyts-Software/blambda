@@ -26,8 +26,20 @@
         }
     },
 
-    "Resources": {        
-       
+    "Resources": {
+    
+       "UI": {
+            "Type": "AWS::Serverless::Application",
+            "Properties": {
+                "Location": "blambda-shall.template",
+                "Parameters": {
+                    "DomainName": {
+                        "Ref": "UIDomainName"
+                    }
+                }
+            }
+        },
+
        "WebApi": {
             "Type": "AWS::Serverless::Application",
             "Properties": {                

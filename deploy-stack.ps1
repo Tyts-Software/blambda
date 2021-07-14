@@ -11,18 +11,6 @@ $templates = ".\src\BLambda.Templates"
 $rootStack = "$domain-stack" 
 
 
-### Build & Prepare deployment packages
-
-## rebuild Web API (dotnet publish inside) 
-dotnet lambda package `
-	--project-location $will `
-	--config-file aws-lambda-tools-defaults.json `
-
-dotnet lambda package `
-	--project-location $hola `
-	--config-file aws-lambda-tools-defaults.json `
-
-
 Write-Host "Set profile..."
 setx AWS_PROFILE $profile
 setx SAM_CLI_TELEMETRY 0
@@ -50,6 +38,25 @@ if ($stackInfo -eq $null)
 		--bucket $domain `
 }
 
+### Build & Prepare deployment packages
+
+## rebuild Web API (dotnet publish inside) 
+dotnet lambda package `
+	--project-location $will `
+	--config-file aws-lambda-tools-defaults.json `
+	
+## rebuild HolaMundo API (dotnet publish inside)  TEMP!!!
+dotnet lambda package `
+	--project-location $hola `
+	--config-file aws-lambda-tools-defaults.json `
+
+## Build & publish UI locally
+# create folder to publish
+New-Item -Path $deploy -ItemType Directory -Force
+# rebuild and publish UI
+dotnet publish $shall --output $deploy -c $configuration 
+
+
 ### Merge Nested Stacks
 Write-Host "Merge Nested Stacks..."
 Push-Location -Path $templates
@@ -76,18 +83,11 @@ aws cloudformation deploy `
 Pop-Location
 
 
-#### Deploy UI
+### Upload UI to S3
+Write-Host "Waiting UI bucket is created..."
+$uiBucket = "$domain-www"
+aws s3api wait bucket-exists --bucket $uiBucket
+Push-Location -Path "$deploy\wwwroot"
+aws s3 sync . s3://$uiBucket
 
-## create folder to publish locally
-#New-Item -Path $deploy -ItemType Directory -Force
-## rebuild and publish UI
-#dotnet publish $shall --output $deploy -c $configuration 
-
-## upload UI to S3
-#Write-Host "Waiting UI bucket is created..."
-#$uiBucket = "$domain-www"
-#aws s3api wait bucket-exists --bucket $uiBucket
-#Push-Location -Path "$deploy\wwwroot"
-#aws s3 sync . s3://$uiBucket
-
-#Pop-Location
+Pop-Location
