@@ -9,6 +9,8 @@
 
 
 	  <!--<PublishReadyToRun>true</PublishReadyToRun>
+	  <TieredCompilation>false</TieredCompilation>
+	  <TieredCompilationQuickJit>false</TieredCompilationQuickJit>
 	  <PublishTrimmed>true</PublishTrimmed>
 	  <InvariantGlobalization>true</InvariantGlobalization>
 	  <TrimMode>link</TrimMode>

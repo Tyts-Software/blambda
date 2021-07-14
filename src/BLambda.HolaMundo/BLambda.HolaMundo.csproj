@@ -5,6 +5,17 @@
     <AWSProjectType>Lambda</AWSProjectType>
     <!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+	  <PublishReadyToRun>true</PublishReadyToRun>
+	  <TieredCompilation>false</TieredCompilation>
+	  <TieredCompilationQuickJit>false</TieredCompilationQuickJit>
+	  <PublishTrimmed>true</PublishTrimmed>
+	  <InvariantGlobalization>true</InvariantGlobalization>
+	  <TrimMode>link</TrimMode>
+	  <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+	  <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+	  <EventSourceSupport>false</EventSourceSupport>
+	  <DebuggerSupport>false</DebuggerSupport>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.2" />
