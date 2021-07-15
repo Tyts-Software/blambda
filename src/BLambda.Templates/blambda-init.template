@@ -15,10 +15,10 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": {"Ref":"AppName"},
+                "AccessControl": "Private",
                 "Tags": [
                     {"Key": "blambda"}
-                ],
-                "AccessControl": "Private"
+                ]
             }
         },
 

@@ -4,5 +4,8 @@ aws --profile $profile `
 		s3 rb --force s3://$domain `
 
 aws --profile $profile `
+		s3 rb --force s3://$domain-www `
+
+aws --profile $profile `
 		cloudformation delete-stack `
 			--stack-name "$domain-stack" `
