@@ -1,10 +1,12 @@
-﻿using System;
-using Tyts.Abstractions.Data;
+﻿using Ddd.Abstructions.Domain;
+using System;
 
 namespace BLambda.Will.Domain
 {
-    public class WeatherForecast: IEntity
+    public class WeatherForecast : Entity<string>, IAggregateRoot
     {
+        public override string Id { get => Date.ToFileTimeUtc().ToString(); protected set { } }
+
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

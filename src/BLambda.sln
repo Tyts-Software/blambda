@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Will", "BLambda.Will\BLambda.Will.csproj", "{D940B10E-F9F6-4BA5-A319-83761F157633}"
 EndProject
-Project("{22325025-CDA3-4736-83CB-2D32D2FCC215}") = "BLambda.Templates", "BLambda.Templates\BLambda.Templates.cfproj", "{99999999-9999-9999-9999-999999999999}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{98A8DE46-0F51-4763-AC94-1465137EB3A7}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
@@ -23,13 +21,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{98A8DE46-0F5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Shall", "BLambda.Shall\BLambda.Shall.csproj", "{D26787ED-BFBF-4061-A42F-71C6E4059410}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tyts", "Tyts", "{B3CFABF2-8C9F-4A6D-AA48-7859EC6CD327}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyts.Abstractions", "Tyts.Abstractions\Tyts.Abstractions.csproj", "{286D0419-A40F-48F7-88A0-291417DF2006}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.HolaMundo", "BLambda.HolaMundo\BLambda.HolaMundo.csproj", "{C9E6288A-EE92-471C-8602-8578C7190F0B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Infrastructure", "Blambda.Infrastructure\BLambda.Infrastructure.csproj", "{EED7CE4D-E694-4498-9A2E-2016106512D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0F7CF599-8CDF-4D92-9A00-D133148631FD}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.Abstructions.Shared", "..\..\minimum\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.shproj", "{B562E115-CD7D-4127-AED6-E66BA3138F9A}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{b562e115-cd7d-4127-aed6-e66ba3138f9a}*SharedItemsImports = 13
+		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -45,12 +50,6 @@ Global
 		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|x86.ActiveCfg = Release|Any CPU
 		{D940B10E-F9F6-4BA5-A319-83761F157633}.Release|x86.Build.0 = Release|Any CPU
-		{99999999-9999-9999-9999-999999999999}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{99999999-9999-9999-9999-999999999999}.Debug|x86.ActiveCfg = Debug|x86
-		{99999999-9999-9999-9999-999999999999}.Debug|x86.Build.0 = Debug|x86
-		{99999999-9999-9999-9999-999999999999}.Release|Any CPU.ActiveCfg = Release|x86
-		{99999999-9999-9999-9999-999999999999}.Release|x86.ActiveCfg = Release|x86
-		{99999999-9999-9999-9999-999999999999}.Release|x86.Build.0 = Release|x86
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -59,14 +58,6 @@ Global
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Release|x86.ActiveCfg = Release|Any CPU
 		{D26787ED-BFBF-4061-A42F-71C6E4059410}.Release|x86.Build.0 = Release|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Debug|x86.Build.0 = Debug|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Release|Any CPU.Build.0 = Release|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Release|x86.ActiveCfg = Release|Any CPU
-		{286D0419-A40F-48F7-88A0-291417DF2006}.Release|x86.Build.0 = Release|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -75,12 +66,20 @@ Global
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|x86.Build.0 = Release|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|x86.Build.0 = Debug|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|x86.ActiveCfg = Release|Any CPU
+		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{286D0419-A40F-48F7-88A0-291417DF2006} = {B3CFABF2-8C9F-4A6D-AA48-7859EC6CD327}
+		{B562E115-CD7D-4127-AED6-E66BA3138F9A} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {176CE588-1B16-4612-B4D5-25EA9E3D425A}

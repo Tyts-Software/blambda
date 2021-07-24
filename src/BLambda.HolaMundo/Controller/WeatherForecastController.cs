@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLambda.HolaMundo.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Tyts.Abstractions.Data;
 
 namespace BLambda.HolaMundo.Controllers
 {
@@ -12,9 +9,9 @@ namespace BLambda.HolaMundo.Controllers
     public class WeatherForecastController : ControllerBase
     {
         //FackeRepository
-        private IRepositoryAsync<WeatherForecast> repository;
+        private IWeatherForecastRepository repository;
 
-        public WeatherForecastController(IRepositoryAsync<WeatherForecast> repository)
+        public WeatherForecastController(IWeatherForecastRepository repository)
         {
             this.repository = repository;
         }

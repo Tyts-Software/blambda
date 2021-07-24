@@ -1,6 +1,5 @@
 ﻿using BLambda.HolaMundo.Domain;
 using Microsoft.Extensions.DependencyInjection;
-using Tyts.Abstractions.Data;
 
 namespace BLambda.HolaMundo.Data
 {
@@ -9,7 +8,7 @@ namespace BLambda.HolaMundo.Data
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             return services
-                    .AddScoped<IRepositoryAsync<WeatherForecast>, WeatherForecastRepository>();
+                    .AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
         }
     }
 }

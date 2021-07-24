@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLambda.Will.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Tyts.Abstractions.Data;
 
 namespace BLambda.Will.Controllers
 {
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        //FackeRepository
-        private IRepositoryAsync<WeatherForecast> repository;
+        private IWeatherForecastRepository repository;
 
-        public WeatherForecastController(IRepositoryAsync<WeatherForecast> repository)
+        public WeatherForecastController(IWeatherForecastRepository repository)
         {
             this.repository = repository;
         }
