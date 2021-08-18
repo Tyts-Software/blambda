@@ -1,15 +1,19 @@
-﻿using BLambda.HolaMundo.Domain;
-using System;
-using Amazon.DynamoDBv2.DataModel;
+﻿using System;
 using Ddd.DynamoDb;
+using Microsoft.Extensions.Logging;
+using Amazon.DynamoDBv2;
+using BLambda.HolaMundo.Domain.TemperatureLog;
 
 namespace BLambda.HolaMundo.Data
 {
-    internal class WeatherForecastRepository : DynamoDbRepository<WeatherForecast, string>, IWeatherForecastRepository
-    {
-        public WeatherForecastRepository(IDynamoDBContext context)
-            : base(context, Environment.GetEnvironmentVariable("WeatherForecastTableName") ?? "WeatherForecastTableName")
+    internal class TemperatureLogRepository : DynamoDbRepository, ITemperatureLogRepository
+    {        
+        public TemperatureLogRepository(IAmazonDynamoDB client, TemperatureLogDbContext mapper, ILogger<TemperatureLogRepository> logger) 
+            : base(client, mapper, Environment.GetEnvironmentVariable("TemperatureLogTableName") ?? "TemperatureLogTableName", logger)
         {
+
+
+
         }
 
         //public async Task<IEnumerable<WeatherForecast>> GetAllAsync() //string paginationToken = ""

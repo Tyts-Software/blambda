@@ -25,9 +25,9 @@ namespace BLambda.HolaMundo.Controllers
 
         // GET api/weather-forecast/5
         [HttpGet("{id}")]
-        public WeatherForecast Get(int id)
+        public async Task<WeatherForecast> Get(string id)
         {
-            throw new System.NotImplementedException();
+            return await repository.GetSingleAsync(id);
         }
 
         // POST api/weather-forecast
