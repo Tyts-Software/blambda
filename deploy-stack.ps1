@@ -1,4 +1,4 @@
-param ($profile='blambda-dev', $domain='blambda', $configuration='Release')
+param ($profile='default', $domain='blambda', $configuration='Release', [switch]$rebuild)
 
 # const
 $deploy = ".\_deploy"
@@ -18,38 +18,42 @@ setx SAM_CLI_TELEMETRY 0 | Out-Null
 ./refreshenv.ps1
 
 
-#### Re-Build projects
-#
+if ($rebuild) {
+	#### Re-Build projects
+	#
 
-#clean up binaries
-Write-Host "Cleaning up binaries..."
-Get-ChildItem .\ -include bin,obj -Recurse | ForEach-Object ($_) { Remove-Item $_.FullName -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null }
-Remove-Item -LiteralPath $templates -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null
+	#clean up binaries
+	Write-Host "Cleaning up binaries..."
+	Get-ChildItem .\ -include bin,obj -Recurse | ForEach-Object ($_) { Remove-Item $_.FullName -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null }
+	Remove-Item -LiteralPath $deploy -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null
 
-### rebuild Web API (dotnet publish inside) 
-dotnet lambda package `
-	--project-location $will `
-	--configuration "Release" `
-	--framework "net5.0" `
-	--msbuild-parameters "--self-contained true" `
-	--package-type "zip" `
-	--output-package $willPackage `
+	### rebuild Web API (dotnet publish inside) 
+	dotnet lambda package `
+		--project-location $will `
+		--configuration "Release" `
+		--framework "net5.0" `
+		--msbuild-parameters "--self-contained true" `
+		--package-type "zip" `
+		--output-package $willPackage `
 
-### rebuild HolaMundo API (dotnet publish inside)  TEMP!!!
-dotnet lambda package `
-	--project-location $hola `
-	--configuration "Release" `
-	--framework "netcoreapp3.1" `
-	--msbuild-parameters "--self-contained false" `
-	--package-type "zip" `
-	--output-package $holaPackage `
-#
-### Build & publish UI locally
-## create folder to publish
-#New-Item -Path $deployShall -ItemType Directory -Force
-## rebuild and publish UI
-#dotnet publish $shall --output $deployShall -c $configuration 
+	### rebuild HolaMundo API (dotnet publish inside)  TEMP!!!
+	dotnet lambda package `
+		--project-location $hola `
+		--configuration "Release" `
+		--framework "netcoreapp3.1" `
+		--msbuild-parameters "--self-contained false" `
+		--package-type "zip" `
+		--output-package $holaPackage `
+	#
+	### Build & publish UI locally
+	## create folder to publish
+	New-Item -Path $deployShall -ItemType Directory -Force
+	## rebuild and publish UI
+	dotnet publish $shall --output $deployShall -c $configuration 
 
+	## COMMENT OUT for production
+	Get-ChildItem $deployShall -File -Recurse -Force -exclude index.html,favicon.ico | ForEach-Object ($_) { Remove-Item $_.FullName -Force -ErrorAction SilentlyContinue | Out-Null }
+}
 
 ### CREATE stacks
 Write-Host "Creating templates..."
@@ -77,12 +81,23 @@ cdk deploy	--all --json `
 			--context hola-package=$holaPackage `
 
 
+			
+### Upload Shall to S3
+$uiBucketName=$(aws cloudformation describe-stacks `
+	--stack-name "$domain-AppStack" `
+	--query "Stacks[0].Outputs[?OutputKey=='ShallBucketName'].OutputValue" `
+	--output text `
+) `
 
-#### Upload Shall to S3
-#Write-Host "Waiting UI bucket is created..."
-#$uiBucket = "shall.$domain"
-#aws s3api wait bucket-exists --bucket $uiBucket
-#Push-Location -Path "$deployShall\wwwroot"
-#aws s3 sync . s3://$uiBucket
-#Pop-Location
+if ($uiBucketName -ne $null)
+{
+	Write-Host "Waiting UI bucket is created..."
 
+	aws s3api wait bucket-exists --bucket $uiBucketName
+	if((aws s3api head-bucket --bucket $uiBucketName) -eq $null) 
+	{
+		Push-Location -Path "$deployShall\wwwroot"
+		aws s3 sync . s3://$uiBucketName
+		Pop-Location
+	}
+}

@@ -4,9 +4,9 @@ using Amazon.CDK.AWS.CloudFront;
 using Amazon.CDK.AWS.CloudFront.Origins;
 using Amazon.CDK.AWS.IAM;
 
-namespace BLambda.Infrastructure.Mainstream
+namespace BLambda.Provision.Mainstream
 {
-    public class ShallStack : NestedStack
+    internal sealed class ShallStack : NestedStack
     {
         public ShallStack(Construct scope, string id) : base(scope, id)
         {
@@ -26,7 +26,7 @@ namespace BLambda.Infrastructure.Mainstream
 
             var shallBucket = new Bucket(this, "ShallBucket", new BucketProps
             {
-                BucketName = siteDomain,
+                //BucketName = siteDomain, // let's aws set Unique names
                 // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
                 // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
                 // DESTROY, cdk destroy will attempt to delete the bucket, but will error if the bucket is not empty.
@@ -64,11 +64,6 @@ namespace BLambda.Infrastructure.Mainstream
             });
 
             shallBucket.AddToResourcePolicy(policy);
-
-            new CfnOutput(scope, "ShallBucketName", new CfnOutputProps
-            {
-                Value = shallBucket.BucketName
-            });
 
             //var certificateArn = new DnsValidatedCertificate(this, "SiteCertificate", new DnsValidatedCertificateProps
             //{
@@ -115,12 +110,7 @@ namespace BLambda.Infrastructure.Mainstream
                         ResponsePagePath = "/index.html"
                     }
                 }
-            });                      
-
-            new CfnOutput(scope, "CloudFrontDomain", new CfnOutputProps
-            {
-                Value = distribution.DistributionDomainName
-            });
+            });           
 
             //new ARecord(this, "SiteAliasRecord", new ARecordProps
             //{
@@ -140,6 +130,17 @@ namespace BLambda.Infrastructure.Mainstream
 
             Amazon.CDK.Tags.Of(this).Add("SERVICE", "blambda-shall");
             Amazon.CDK.Tags.Of(this).Add("TRIGGER", "cloudfront");
+
+            new CfnOutput(scope, "ShallBucketName", new CfnOutputProps
+            {
+                Value = shallBucket.BucketName,
+                ExportName = $"{Domain}:ShallBucket"
+            });
+
+            new CfnOutput(scope, "CloudFrontDomain", new CfnOutputProps
+            {
+                Value = distribution.DistributionDomainName
+            });
         }
     }
 }

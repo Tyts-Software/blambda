@@ -3,18 +3,22 @@ using Amazon.CDK.AWS.APIGatewayv2;
 using Amazon.CDK.AWS.APIGatewayv2.Integrations;
 using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.Logs;
+using Amazon.CDK.AWS.SSM;
 using System.Collections.Generic;
 
-namespace BLambda.Infrastructure.Mainstream
+namespace BLambda.Provision.Mainstream
 {
     internal class HolaMundoStackProps : StackProps
     {
         public string Domain { get; set; }
         public string SubDomain { get; set; }
         public string LogLevel { get; set; }
+
+        public string WeatherForecastTableNameParameter { get; set; }
+        public string TemperatureLogTableNameParameter { get; set; }
     }
 
-    internal class HolaMundoStack : NestedStack
+    internal sealed class HolaMundoStack : NestedStack
     {
         public HolaMundoStack(Construct scope, string id, HolaMundoStackProps props) : base(scope, id)
         {
@@ -35,7 +39,10 @@ namespace BLambda.Infrastructure.Mainstream
                 Role = null,
 
                 Environment = new Dictionary<string, string>{
-                    { "LOG_LEVEL", logLevel }
+                    { "LOG_LEVEL", logLevel },
+
+                    { "WeatherForecastTableName", StringParameter.ValueForStringParameter(this, props.WeatherForecastTableNameParameter) },
+                    { "TemperatureLogTableName", StringParameter.ValueForStringParameter(this, props.TemperatureLogTableNameParameter) }
                 }
             });
 

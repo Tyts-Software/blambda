@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{595273AF-2810-4A98-9A59-778BB3AED32E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\cdk.json = ..\cdk.json
 		..\delete-stack.ps1 = ..\delete-stack.ps1
 		..\deploy-stack.ps1 = ..\deploy-stack.ps1
 		..\Directory.Build.props = ..\Directory.Build.props
@@ -23,16 +24,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Shall", "BLambda.Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.HolaMundo", "BLambda.HolaMundo\BLambda.HolaMundo.csproj", "{C9E6288A-EE92-471C-8602-8578C7190F0B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Infrastructure", "Blambda.Infrastructure\BLambda.Infrastructure.csproj", "{EED7CE4D-E694-4498-9A2E-2016106512D0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0F7CF599-8CDF-4D92-9A00-D133148631FD}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.Abstructions.Shared", "..\..\minimum\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.shproj", "{B562E115-CD7D-4127-AED6-E66BA3138F9A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Provision", "Blambda.Provision\BLambda.Provision.csproj", "{2103CBDF-0961-43BF-B0EE-CA376C2794B8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.DynamoDb.Shared", "..\..\minimum\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.shproj", "{318C9AB5-7C50-4866-BFBE-1514BE644992}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\minimum\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{318c9ab5-7c50-4866-bfbe-1514be644992}*SharedItemsImports = 13
 		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{b562e115-cd7d-4127-aed6-e66ba3138f9a}*SharedItemsImports = 13
 		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\minimum\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
 		..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,20 +71,21 @@ Global
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9E6288A-EE92-471C-8602-8578C7190F0B}.Release|x86.Build.0 = Release|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Debug|x86.Build.0 = Debug|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|x86.ActiveCfg = Release|Any CPU
-		{EED7CE4D-E694-4498-9A2E-2016106512D0}.Release|x86.Build.0 = Release|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Debug|x86.Build.0 = Debug|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|x86.ActiveCfg = Release|Any CPU
+		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B562E115-CD7D-4127-AED6-E66BA3138F9A} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
+		{318C9AB5-7C50-4866-BFBE-1514BE644992} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {176CE588-1B16-4612-B4D5-25EA9E3D425A}

@@ -2,10 +2,11 @@
 using Amazon.CDK.AWS.APIGatewayv2;
 using Amazon.CDK.AWS.APIGatewayv2.Integrations;
 using Amazon.CDK.AWS.Lambda;
+using Amazon.CDK.AWS.Lambda.EventSources;
 using Amazon.CDK.AWS.Logs;
 using System.Collections.Generic;
 
-namespace BLambda.Infrastructure.Mainstream
+namespace BLambda.Provision.Mainstream
 {
     internal class WillStackProps : StackProps
     {
@@ -14,16 +15,16 @@ namespace BLambda.Infrastructure.Mainstream
         public string LogLevel { get; set; }
     }
 
-    internal class WillStack : NestedStack
+    internal sealed class WillStack : NestedStack
     {
         public WillStack(Construct scope, string id, WillStackProps props) : base(scope, id)
         {
-           var domain = props.Domain ?? (string)this.Node.TryGetContext("domain") ?? "blambda";
+            var domain = props.Domain ?? (string)this.Node.TryGetContext("domain") ?? "blambda";
             var subDomain = props.SubDomain ?? (string)this.Node.TryGetContext("will-subdomain") ?? "will";
             var lambdaPackage = (string)this.Node.TryGetContext("will-package") ?? "BLambda.Will.zip";
             var apiDomain = $"{subDomain}.{domain}";
 
-            var logLevel = (string)this.Node.TryGetContext("log-level") ?? "INFO";
+            var logLevel = props.LogLevel ?? (string)this.Node.TryGetContext("log-level") ?? "INFO";
 
             var webApiFunction = new Function(this, "WebApiFunction", new FunctionProps
             {
@@ -32,9 +33,24 @@ namespace BLambda.Infrastructure.Mainstream
                 Handler = "not_required_for_custom_runtime",
                 MemorySize = 128,
                 Timeout = Duration.Seconds(10),
+                //ReservedConcurrentExecutions = 5, // optional, reserved concurrency limit for this function. By default, AWS uses account concurrency limit
+                //Tracing =  Tracing.PASS_THROUGH, // optional, overwrite, can be 'Active' or 'PassThrough'
+                //CurrentVersionOptions = new VersionOptions
+                //{
+                //    ProvisionedConcurrentExecutions = 5 // warm instances
+                //},
+
+                //Events = new[]
+                //{
+                //    new ApiEventSource("ANY", "/{proxy+}", new Amazon.CDK.AWS.APIGateway.MethodOptions
+                //    { 
+                        
+                //    })
+                //},
+
                 Role = null,
 
-                Environment = new Dictionary<string, string>{
+                Environment = new Dictionary<string, string> {
                     { "LOG_LEVEL", logLevel }
                 }
             });

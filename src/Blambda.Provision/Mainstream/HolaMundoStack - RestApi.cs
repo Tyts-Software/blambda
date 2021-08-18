@@ -5,7 +5,7 @@ using Amazon.CDK.AWS.Logs;
 using System;
 using System.Collections.Generic;
 
-namespace BLambda.Infrastructure.Mainstream
+namespace BLambda.Provision.Mainstream
 {
     internal class RestApiStackProps : StackProps
     {
@@ -15,7 +15,7 @@ namespace BLambda.Infrastructure.Mainstream
     }
 
     [Obsolete("Use HttpApi instead")]
-    internal class RestApiStack : NestedStack
+    internal sealed class RestApiStack : NestedStack
     {
         public RestApiStack(Construct scope, string id, RestApiStackProps props) : base(scope, id)
         {

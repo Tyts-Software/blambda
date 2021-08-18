@@ -1,7 +1,7 @@
 ﻿using Amazon.CDK;
 using System;
 
-namespace BLambda.Infrastructure
+namespace BLambda.Provision
 {
     sealed class Program
     {
