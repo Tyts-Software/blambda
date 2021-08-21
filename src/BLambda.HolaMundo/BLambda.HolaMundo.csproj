@@ -30,6 +30,6 @@
 		<!--<PackageReference Include="System.Linq.Async" Version="5.0.0" />
 		<PackageReference Include="System.Linq.Async.Queryable" Version="5.0.0" />-->
 	</ItemGroup>
-	<Import Project="..\..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
-	<Import Project="..\..\..\minimum\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
 </Project>

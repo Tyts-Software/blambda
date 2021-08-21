@@ -33,6 +33,4 @@
 		<PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.3.0" />
 		<PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
 	</ItemGroup>
-
-	<Import Project="..\..\..\minimum\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
 </Project>

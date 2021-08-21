@@ -6,7 +6,7 @@ using BLambda.HolaMundo.Domain.TemperatureLog;
 
 namespace BLambda.HolaMundo.Data
 {
-    internal class TemperatureLogRepository : DynamoDbRepository, ITemperatureLogRepository
+    internal class TemperatureLogRepository : DynamoDbDocumentRepository, ITemperatureLogRepository
     {        
         public TemperatureLogRepository(IAmazonDynamoDB client, TemperatureLogDbContext mapper, ILogger<TemperatureLogRepository> logger) 
             : base(client, mapper, Environment.GetEnvironmentVariable("TemperatureLogTableName") ?? "TemperatureLogTableName", logger)
