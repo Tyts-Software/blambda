@@ -38,6 +38,8 @@ Global
 		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{b562e115-cd7d-4127-aed6-e66ba3138f9a}*SharedItemsImports = 13
 		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
 		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
+		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

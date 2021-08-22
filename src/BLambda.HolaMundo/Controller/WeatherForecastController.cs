@@ -8,7 +8,6 @@ namespace BLambda.HolaMundo.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        //FackeRepository
         private IWeatherForecastRepository repository;
 
         public WeatherForecastController(IWeatherForecastRepository repository)

@@ -1,8 +1,8 @@
-﻿using Ddd.Abstructions.Domain;
+﻿using Ddd.DynamoDb;
 
 namespace BLambda.Will.Domain
 {
-    public interface IWeatherForecastRepository : IRepository<WeatherForecast>, IQueryAsync<WeatherForecast, string>
+    public interface IWeatherForecastRepository : IRepositoryAsync<WeatherForecast, string>
     {
     }
 }
