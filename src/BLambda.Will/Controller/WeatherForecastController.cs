@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using BLambda.Will.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +16,9 @@ namespace BLambda.Will.Controllers
 
         // GET api/weather-forecast
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        public IAsyncEnumerable<WeatherForecast> Get()
         {
-            return await repository.GetAllAsync();
+            return repository.GetAllAsync();
         }
 
         // GET api/weather-forecast/5

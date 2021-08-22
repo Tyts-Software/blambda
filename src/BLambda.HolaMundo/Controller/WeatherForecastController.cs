@@ -8,8 +8,7 @@ namespace BLambda.HolaMundo.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        //FackeRepository
-        private IWeatherForecastRepository repository;
+        private readonly IWeatherForecastRepository repository;
 
         public WeatherForecastController(IWeatherForecastRepository repository)
         {
@@ -18,9 +17,9 @@ namespace BLambda.HolaMundo.Controllers
 
         // GET api/weather-forecast
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        public IAsyncEnumerable<WeatherForecast> Get()
         {
-            return await repository.GetAllAsync();
+            return repository.GetAllAsync();
         }
 
         // GET api/weather-forecast/5
