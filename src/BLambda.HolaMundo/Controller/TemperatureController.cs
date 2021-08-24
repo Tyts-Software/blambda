@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading;
@@ -13,7 +14,10 @@ using BLambda.HolaMundo.Helper;
 using Ddd.DynamoDb;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using NJsonSchema.Annotations;
+using NSwag.Annotations;
 
 namespace BLambda.HolaMundo.Controllers
 {
@@ -33,21 +37,20 @@ namespace BLambda.HolaMundo.Controllers
         // GET api/temperature?ps=2 & Headers["X-Pagination-Token"]
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(200, Type = typeof(Page<LocationStat>))]
-        [ProducesResponseType(200, Type = typeof(IAsyncEnumerable<LocationStat>))]
-        public async Task<ActionResult> GetAllCurrent([FromQuery] int? ps, [FromHeader(Name = Page.PAGINATION_TOKEN_HEADER)] string? pt)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LocationStat>))]
+        //[ProducesResponseType(200, Type = typeof(IAsyncEnumerable<LocationStat>))]
+        public async Task<ActionResult> GetAllCurrent([FromQuery(Name = "ps")] int? pSize = default, [FromHeader(Name = Page.PAGINATION_TOKEN_HEADER)] string? pToken = default)
         {
-            if (ps.HasValue)
+            if (pSize.HasValue)
             {
                 var page = await temperatureLog.GetAllPagedAsync<LocationStat>(new PageParam()
                 {
-                    PageSize = ps.Value,
-                    PaginationToken = pt
+                    PageSize = pSize.Value,
+                    PaginationToken = pToken
                 });
-
-                logger.LogDebug($"{nameof(GetAllCurrent)} page => size:{page.Count()} last:{page.IsLast} pt:{page.PaginationToken}");
-
+                
                 Response.Headers.Add(Page.PAGINATION_TOKEN_HEADER, page.PaginationToken);
+                logger.LogDebug($"{nameof(GetAllCurrent)} page => size:{page.Size} last:{page.IsLast} pt:{page.PaginationToken}");
                 return Ok(page);
             }
 
@@ -57,12 +60,13 @@ namespace BLambda.HolaMundo.Controllers
 
         // GET api/temperature/vlc
         [HttpGet("{location}")]
-        public async Task<LocationStat?> GetCurrent([UpperCase] string location)
+        public async Task<LocationStat?> GetCurrent([FromRoute][UpperCase][NotNull] string location)
         {
             return await temperatureLog.GetSingleOrDefaultAsync<LocationStat>(location, location);
         }
 
         // GET api/temperature/vlc/2021
+        [OpenApiIgnore()]
         [HttpGet("{location}/{date:yyyy}")]
         public async Task<YearStat?> GetYearSummary([UpperCase] string location, string date)
         {
@@ -70,24 +74,33 @@ namespace BLambda.HolaMundo.Controllers
         }
 
         // GET api/temperature/vlc/2021-07
+        [OpenApiIgnore()]
         [HttpGet("{location}/{date:yyyy-MM}")]
         public async Task<MonthStat?> GetMonthSummary([UpperCase] string location, string date)
         {
             return await temperatureLog.GetSingleOrDefaultAsync<MonthStat>(location, date);
         }
-        
+
         // GET api/temperature/vlc/2021-07-30
         //[HttpGet("{location}/{day:regex(^\\d{{4}}-\\d{{2}}-\\d{{2}}$)}")]
         [HttpGet("{location}/{date:yyyy-MM-dd}")]
-        public async Task<DayStat?> GetDaySummary([UpperCase] string location, string date)
+        public async Task<DayStat?> GetDaySummary([FromRoute][UpperCase][NotNull] string location, [FromRoute][NotNull] string date)
         {
             var result = await temperatureLog.GetSingleOrDefaultAsync<DayStat>(location, date);
             return result;
         }
 
-        // GET api/temperature/vlc/2021-07/*
+        /// <summary>
+        /// Get daily stast for the month        
+        /// </summary>
+        /// <param name="location">An IATA airport code, also known as an IATA location identifier, IATA station code, or simply a location identifier, is a three-letter geocode designating many airports and metropolitan areas around the world, defined by the International Air Transport Association (IATA).</param>
+        /// <param name="month">Month in format: yyyy-MM</param>
+        /// <returns></returns>
+        /// <example>
+        /// Ex.: GET api/temperature/vlc/2021-07/*
+        /// </example>
         [HttpGet("{location}/{month:yyyy-MM}/*")]
-        public IAsyncEnumerable<DayStat> GetForMonth([UpperCase] string location, string month)
+        public IAsyncEnumerable<DayStat> GetForMonthAsync([FromRoute][UpperCase][NotNull] string location, [FromRoute][NotNull] string month)
         {
             var filter = new QueryFilter("PK", QueryOperator.Equal, location);
             filter.AddCondition("SK", QueryOperator.BeginsWith, $"{nameof(DayStat)}#{month}-");
@@ -108,7 +121,7 @@ namespace BLambda.HolaMundo.Controllers
 
         // GET api/temperature/vlc/2021/*
         [HttpGet("{location}/{year:yyyy}/*")]
-        public IAsyncEnumerable<MonthStat> GetForYear([UpperCase] string location, string year)
+        public IAsyncEnumerable<MonthStat> GetForYear([FromRoute][UpperCase][NotNull] string location, [FromRoute][NotNull] string year)
         {
             var filter = new QueryFilter("PK", QueryOperator.Equal, location);
             filter.AddCondition("SK", QueryOperator.BeginsWith, $"{nameof(MonthStat)}#{year}-");
@@ -136,12 +149,7 @@ namespace BLambda.HolaMundo.Controllers
                 return CreatedAtAction(nameof(Seed), "Table is seeded");
             }
 
-            return HttpStatusCodeResult(304, "Not Modified");
-        }
-
-        private IActionResult HttpStatusCodeResult(int v1, string v2)
-        {
-            throw new NotImplementedException();
+            return new StatusCodeResult(304);
         }
 
         // POST api/temperature
@@ -149,7 +157,7 @@ namespace BLambda.HolaMundo.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([ModelBinder(BinderType = typeof(StatModelBinder))] IStat stat)
+        public async Task<IActionResult> Post([ModelBinder(BinderType = typeof(StatModelBinder))][NotNull] IStat stat)
         {
             if (stat == null)
             {
@@ -173,7 +181,7 @@ namespace BLambda.HolaMundo.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete([UpperCase] string location, string? date)
+        public async Task<IActionResult> Delete([FromRoute][UpperCase][NotNull] string location, string? date)
         {
             if (location == null && date == null)
             {

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--Add build time reference to SampleService project--><!--
+		<ProjectReference Include="..\BLambda.HolaMundo\BLambda.HolaMundo.csproj">
+			<Private>False</Private>
+			<ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+		</ProjectReference>-->
+		
+		<PackageReference Include="NSwag.MSBuild" Version="13.13.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+	
+	<!--<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
+		<Message Importance="High" Text="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration)" />
+		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration)" />
+		<Delete Files="$(ProjectDir)\obj\$(MSBuildProjectFile).NSwag.targets" />-->
+	<!-- This thingy trigger project rebuild -->
+	<!--
+	</Target>-->
+
+	<Target Name="GenerateApiClientSourceCode" BeforeTargets="CoreCompile;PrepareResource">
+		<Exec Command="$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration),Output=$(ProjectDir)\Generated_Code\ApiClient.generated.cs" />
+		<ItemGroup>
+			<Compile Include="$(ProjectDir)\Generated_Code\ApiClient.generated.cs" />
+		</ItemGroup>
+	</Target>
+</Project>

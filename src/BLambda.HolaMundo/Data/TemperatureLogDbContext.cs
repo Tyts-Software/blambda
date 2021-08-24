@@ -73,7 +73,7 @@ namespace BLambda.HolaMundo.Data
             };
         }
 
-        public T FromDocument<T>(Document document) where T : IAggregateRoot
+        public T FromDocument<T>(Document document) where T : notnull, IAggregateRoot
         {
             _ = document ?? throw new ArgumentNullException($"{nameof(document)} cannot be null");
             //if (document == null) return default;
@@ -82,7 +82,7 @@ namespace BLambda.HolaMundo.Data
             return (T)result;
         }
 
-        private object FromDocument<T>(TokenOf<T> tokenized, Document document)
+        private object FromDocument<T>(TokenOf<T> tokenized, Document document) where T : notnull 
         {
             return tokenized switch
             {

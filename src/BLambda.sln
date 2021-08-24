@@ -32,6 +32,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.Abstructions.Shared", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.DynamoDb.Shared", "..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.shproj", "{318C9AB5-7C50-4866-BFBE-1514BE644992}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLambda.HolaMundo.Client", "BLambda.HolaMundo.Client\BLambda.HolaMundo.Client.csproj", "{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{318c9ab5-7c50-4866-bfbe-1514be644992}*SharedItemsImports = 13
@@ -80,6 +82,14 @@ Global
 		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|x86.ActiveCfg = Release|Any CPU
 		{2103CBDF-0961-43BF-B0EE-CA376C2794B8}.Release|x86.Build.0 = Release|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Debug|x86.Build.0 = Debug|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Release|x86.ActiveCfg = Release|Any CPU
+		{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
