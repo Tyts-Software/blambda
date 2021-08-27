@@ -3,9 +3,6 @@ using Amazon.CDK.AWS.DynamoDB;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.S3;
 using Amazon.CDK.AWS.SSM;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BLambda.Provision.Mainstream
 {
@@ -17,13 +14,13 @@ namespace BLambda.Provision.Mainstream
 
     internal sealed class AppSharedConstruct : Construct
     {
-        public string WeatherForecastTableNameParameter { get; }
+        private readonly Table table;
 
         public AppSharedConstruct(Construct scope, AppSharedConstructProps props) : base(scope, "Shared")
         {
-            var appBucket = new Bucket(this, "AppBucket", new BucketProps
+            var appBucket = new Bucket(scope, "AppBucket", new BucketProps
             {
-                BucketName = props.Domain, // let's aws set Unique names ?? but what about table names
+                BucketName = props.Domain.ToLower(), // let's aws set Unique names ?? but what about table names
                 PublicReadAccess = false,
                 Versioned = true,
 
@@ -36,7 +33,7 @@ namespace BLambda.Provision.Mainstream
             });
 
 
-            var table = new Table(this, "WeatherForecast", new TableProps
+            table = new Table(scope, "WeatherForecast", new TableProps
             {
                 //TableName = "WeatherForecast",
                 PartitionKey = new Amazon.CDK.AWS.DynamoDB.Attribute
@@ -121,29 +118,53 @@ namespace BLambda.Provision.Mainstream
 
             //table.GrantReadWriteData(new AccountRootPrincipal());
 
-            Tags.Of(appBucket).Add("BUCKET", "app-bucket");
+            Amazon.CDK.Tags.Of(appBucket)
+                .Add("BUCKET", "app-bucket");
 
-            // Output values
 
-            new CfnOutput(this, "AppBucketName", new CfnOutputProps
+            //// Output values
+            new CfnOutput(scope, "AppBucketName", new CfnOutputProps
             {                
                 Value = appBucket.BucketName,
                 ExportName = $"{props.Domain}:AppBucket"
             });
 
             
-            new CfnOutput(this, "WeatherForecastTableName", new CfnOutputProps{
+            new CfnOutput(scope, "WeatherForecastTableName", new CfnOutputProps{
                 Value = table.TableName
             });
-            WeatherForecastTableNameParameter = new StringParameter(this, "WeatherForecastTableNameParameter", new StringParameterProps {
-                  ParameterName = $"/{props.Domain}/WeatherForecastTable",             
-                  StringValue = table.TableName,
-            }).ParameterName;
 
-            new CfnOutput(this, "WeatherForecastTableArn", new CfnOutputProps{
+            TableName = table.TableName;
+
+            //TableNameParameter = $"/{props.Domain}/WeatherForecastTable";
+            //// AWS Systems Manager -> Parameter Store
+            //new StringParameter(this, "WeatherForecastTableNameParameter", new StringParameterProps
+            //{
+            //    ParameterName = TableNameParameter,
+            //    StringValue = table.TableName,
+            //});
+
+            
+
+
+            new CfnOutput(scope, "WeatherForecastTableArn", new CfnOutputProps{
                 Value = table.TableArn,
                 ExportName = $"arn:{props.Domain}:WeatherForecastTable",
             });
+
+            //// Export shared resources
+            //this.ExportValue(appBucket.BucketName);
+            //this.ExportValue(table.TableName);
         }
+
+        //public string TableNameParameter { get; }
+
+        public string TableName 
+        {
+            get => System.Environment.GetEnvironmentVariable("WeatherForecastTableName");
+            set => System.Environment.SetEnvironmentVariable("WeatherForecastTableName", value);
+        }
+
+        public void GrantReadData(IGrantable function) => table.GrantReadData(function);
     }
 }

@@ -26,17 +26,18 @@
 	<ItemGroup>
 	  <Compile Remove="Helper\JsonConverter\StatJsonConverter.cs" />
 	  <Compile Remove="Helper\NSwag\MarkAsRequiredIfNonNullableSchemaProcessor.cs" />
+	  <Compile Remove="Helper\ValueProvider\UpperCaseValueProvider.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.3" />
-		<PackageReference Include="AWS.Logger.AspNetCore" Version="3.2.0" />
-		<PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.54" />
-		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.1" />
+		<PackageReference Include="Amazon.Lambda.Logging.AspNetCore" Version="3.1.0" />
+		<PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.56" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.1" />		
 		<PackageReference Include="NSwag.AspNetCore" Version="13.13.2" />
 		<PackageReference Include="System.Text.Json" Version="5.0.2" />
 		<PackageReference Include="System.Linq.Async" Version="5.0.0" />
 		<!--<PackageReference Include="System.Linq.Async.Queryable" Version="5.0.0" />-->		
-	</ItemGroup>
+	</ItemGroup>	
 
 	<Import Project="..\..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
 	<Import Project="..\..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />

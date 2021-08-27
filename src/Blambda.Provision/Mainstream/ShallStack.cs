@@ -12,6 +12,7 @@ namespace BLambda.Provision.Mainstream
         {
             var Domain = (string)this.Node.TryGetContext("domain") ?? "blambda";
             var ShallSubDomain = (string)this.Node.TryGetContext("shall-subdomain") ?? "shall";
+            var logLevel = (string)this.Node.TryGetContext("log-level") ?? "Warning";
 
             //var zone = HostedZone.FromLookup(this, "Zone", new HostedZoneProviderProps
             //{

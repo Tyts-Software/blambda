@@ -25,21 +25,21 @@ namespace BLambda.Provision
             //var shall = new ShallStack(this, "ShallStack");
 
             //// Will (custom runtime)
-            //var will = new WillStack(this, $"{Domain}-WillStack", new WillStackProps
+            //var will = new WillStack(this, "WillStack", new WillStackProps
             //{
             //    Domain = Domain,
             //    SubDomain = "will",
-            //    LogLevel = "INFO"
             //});
 
-            //// HolaMundo API
-            //var hola = new HolaMundoStack(this, $"{Domain}-HolaMundoStack", new HolaMundoStackProps
-            //{
-            //    Domain = Domain,
-            //    SubDomain = "hola",
-            //    LogLevel = "INFO",
-            //    WeatherForecastTableNameParameter = shared.WeatherForecastTableNameParameter
-            //});
+            // HolaMundo API
+            var hola = new HolaMundoStack(this, "HolaMundoStack", new HolaMundoStackProps
+            {
+                Domain = Domain,
+                SubDomain = "hola",
+
+                WeatherForecastDb = shared,
+                TemperatureLogDb = tLogDb
+            });
 
             ///// Pipelines
         }

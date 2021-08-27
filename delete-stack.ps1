@@ -1,6 +1,6 @@
-param ($profile='default', $domain='blambda')
+param ($profile='default', $domain='BLambda')
 
-$appStackName = "$domain-AppStack"
+$appStackName = "$domain`Stack"
 
 Write-Host "Set profile..."
 setx AWS_PROFILE $profile | Out-Null

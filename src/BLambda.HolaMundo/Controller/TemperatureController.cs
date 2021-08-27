@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading;
@@ -50,11 +51,11 @@ namespace BLambda.HolaMundo.Controllers
                 });
                 
                 Response.Headers.Add(Page.PAGINATION_TOKEN_HEADER, page.PaginationToken);
-                logger.LogDebug($"{nameof(GetAllCurrent)} page => size:{page.Size} last:{page.IsLast} pt:{page.PaginationToken}");
+                Debug.WriteLine($"{nameof(GetAllCurrent)} page => size:{page.Size} last:{page.IsLast} pt:{page.PaginationToken}");
                 return Ok(page);
             }
 
-            logger.LogDebug($"{nameof(GetAllCurrent)}");
+            Debug.WriteLine($"{nameof(GetAllCurrent)}");
             return Ok(temperatureLog.GetAllAsync<LocationStat>());
         }        
 
@@ -62,7 +63,7 @@ namespace BLambda.HolaMundo.Controllers
         [HttpGet("{location}")]
         public async Task<LocationStat?> GetCurrent([FromRoute][UpperCase][NotNull] string location)
         {
-            return await temperatureLog.GetSingleOrDefaultAsync<LocationStat>(location, location);
+            return await temperatureLog.GetSingleOrDefaultAsync<LocationStat>(location, nameof(LocationStat));
         }
 
         // GET api/temperature/vlc/2021
@@ -156,17 +157,18 @@ namespace BLambda.HolaMundo.Controllers
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([ModelBinder(BinderType = typeof(StatModelBinder))][NotNull] IStat stat)
+        public async Task<IActionResult> Post([FromBody][ModelBinder(BinderType = typeof(StatModelBinder))][NotNull] IStat stat)
         {
             if (stat == null)
             {
                 return BadRequest();
             }
 
-            await temperatureLog.SaveAsync(stat);
-
-            return Ok();
+            return await temperatureLog.SaveAsync(stat)
+                ? Ok()
+                : new StatusCodeResult(304);
         }
 
         //// PUT api/temperature/vlc

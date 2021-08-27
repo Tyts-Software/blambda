@@ -1,16 +1,17 @@
 ﻿using Amazon.CDK;
 using Amazon.CDK.AWS.DynamoDB;
+using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.SSM;
 
 namespace BLambda.Provision.Mainstream
 {
     internal sealed class TemperatureLogDb : Construct
     {
-        public string TableNameParameter { get; }
+        private readonly Table table;
 
         public TemperatureLogDb(Construct scope, string id, AppSharedConstructProps props) : base(scope, id)
         {
-            var table = new Table(scope, "TemperatureLogTable", new TableProps
+            table = new Table(scope, "TemperatureLogTable", new TableProps
             {
                 //TableName = "TemperatureLog",
                 PartitionKey = new Attribute
@@ -106,28 +107,84 @@ namespace BLambda.Provision.Mainstream
             //});
 
 
-
             //table.GrantReadWriteData(new AccountRootPrincipal());
-
             //Tags.Of(appBucket).Add("BUCKET", "app-bucket");
 
-            // Output values
 
+            // Output values
             new CfnOutput(scope, "TemperatureLogTableName", new CfnOutputProps
             {
                 Value = table.TableName
             });
-            TableNameParameter = new StringParameter(scope, "TemperatureLogTableNameParameter", new StringParameterProps
-            {
-                ParameterName = $"/{props.Domain}/TemperatureLogTable",
-                StringValue = table.TableName,
-            }).ParameterName;
+
+            TableName = table.TableName;
+
+            //TableNameParameter = $"/{props.Domain}/TemperatureLogTable";
+            //new StringParameter(scope, "TemperatureLogTableNameParameter", new StringParameterProps
+            //{
+            //    ParameterName = TableNameParameter,
+            //    StringValue = table.TableName,
+            //});
 
             new CfnOutput(scope, "TemperatureLogTableArn", new CfnOutputProps
             {
                 Value = table.TableArn,
                 //ExportName = $"arn:{props.Domain}:TemperatureLogTable",
             });
+        }
+
+        //public string TableNameParameter { get; }
+
+        public string TableName
+        {
+            get => System.Environment.GetEnvironmentVariable("TemperatureLogTable");
+            set => System.Environment.SetEnvironmentVariable("TemperatureLogTable", value);
+        }
+
+        public void GrantReadWriteData(IGrantable function)
+        {
+            table.GrantReadWriteData(function);
+            table.Grant(function,
+                "dynamodb:DescribeTable"
+            );
+
+            //"dynamodb:DeleteItem",
+            //  "dynamodb:DescribeContributorInsights",
+            //  "dynamodb:RestoreTableToPointInTime",
+            //  "dynamodb:ListTagsOfResource",
+            //  "dynamodb:CreateTableReplica",
+            //  "dynamodb:UpdateContributorInsights",
+            //  "dynamodb:CreateBackup",
+            //  "dynamodb:DeleteTable",
+            //  "dynamodb:UpdateTableReplicaAutoScaling",
+            //  "dynamodb:UpdateContinuousBackups",
+            //  "dynamodb:TagResource",
+            //  "dynamodb:DescribeTable",
+            //  "dynamodb:GetItem",
+            //  "dynamodb:DescribeContinuousBackups",
+            //  "dynamodb:BatchGetItem",
+            //  "dynamodb:UpdateTimeToLive",
+            //  "dynamodb:BatchWriteItem",
+            //  "dynamodb:ConditionCheckItem",
+            //  "dynamodb:UntagResource",
+            //  "dynamodb:PutItem",
+            //  "dynamodb:Scan",
+            //  "dynamodb:Query",
+            //  "dynamodb:UpdateItem",
+            //  "dynamodb:DeleteTableReplica",
+            //  "dynamodb:DescribeTimeToLive",
+            //  "dynamodb:RestoreTableFromBackup",
+            //  "dynamodb:UpdateTable",
+            //  "dynamodb:DescribeTableReplicaAutoScaling",
+            //  "dynamodb:GetShardIterator",
+            //  "dynamodb:DescribeStream",
+            //  "dynamodb:GetRecords",
+            //  "dynamodb:DescribeLimits",
+            //  "dynamodb:ListStreams"
+
+            //dynamodb:DescribeReservedCapacity 
+            //dynamodb:PurchaseReservedCapacityOfferings
+            //dynamodb:DescribeReservedCapacityOfferings
         }
     }
 }

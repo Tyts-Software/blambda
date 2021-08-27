@@ -24,7 +24,7 @@ namespace BLambda.Provision.Mainstream
             var lambdaPackage = (string)this.Node.TryGetContext("hola-package") ?? "BLambda.HolaMundo.zip";
             var apiDomain = $"{subDomain}.{domain}";
 
-            var logLevel = props.LogLevel ?? (string)this.Node.TryGetContext("log-level") ?? "INFO";
+            var logLevel = props.LogLevel ?? (string)this.Node.TryGetContext("log-level") ?? "Warning";
 
             var webApiFunction = new Function(this, "WebApiFunction", new FunctionProps
             {

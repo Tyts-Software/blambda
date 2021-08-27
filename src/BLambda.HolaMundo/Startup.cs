@@ -1,4 +1,3 @@
-using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using BLambda.HolaMundo.Data;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +15,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.IO.Compression;
-using System.Net.Mime;
 using System.Text;
 
 namespace BLambda.HolaMundo
@@ -41,8 +38,8 @@ namespace BLambda.HolaMundo
             services.AddControllers(options =>
             {
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
-                options.ValueProviderFactories.Add(new UpperCaseValueProviderFactory());
-
+                
+                //options.ValueProviderFactories.Add(new UpperCaseValueProviderFactory());
                 //options.InputFormatters.Insert(0, new StatInputFormatter());
 
                 options.AllowEmptyInputInBodyModelBinding = true;
@@ -64,7 +61,6 @@ namespace BLambda.HolaMundo
             services.AddAWSService<IAmazonDynamoDB>()          
                     .AddScoped<IAmazonDynamoDB, AmazonDynamoDBClient>()
                     .AddScoped<IDynamoDBContext, DynamoDBContext>();
-            
 
             // add data layer here
             services.AddRepositories();
@@ -72,20 +68,45 @@ namespace BLambda.HolaMundo
             // logging
             services.AddLogging(config =>
             {
-                config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
-                
+                config.ClearProviders();
                 if (Env.IsDevelopment())
                 {
-                    AWSConfigs.LoggingConfig.LogTo = LoggingOptions.Console;
+                    config.AddConsole(); // allowed to see the Console Log
+                    config.AddDebug();   // allowed to see the Debug log
                 }
+                else
+                {
+                    var ll = (LogLevel) Enum.Parse(typeof(LogLevel), Environment.GetEnvironmentVariable("LOG_LEVEL") ?? "Warning");
+                    config.AddLambdaLogger(new LambdaLoggerOptions
+                    {
+                        IncludeCategory = true,
+                        IncludeLogLevel = true,
+                        IncludeNewline = true,
+                        IncludeEventId = false,
+                        IncludeException = true,
+                        IncludeScopes = true,
+                        Filter = (category, logLevel) => category switch
+                        {
+                            "Default" => ll >= LogLevel.Warning,
+                            "System" => ll >= LogLevel.Warning,
+                            "Microsoft" => ll >= LogLevel.Warning,
+                            "Microsoft.Hosting.Lifetime" => ll >= LogLevel.Warning,
+                            _ => true
+                        }
+                    });
+                }                
             });
 
             // Register the Swagger services
-            services.AddSwaggerDocument(d => {
+            services.AddSwaggerDocument(d =>
+            {
                 //d.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
 
                 d.RequireParametersWithoutDefault = true;
                 //d.AllowReferencesWithProperties = true;
+
+                //prevent the required fields from accepting null as a value
+                d.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
             });
 
             // Health check 
@@ -136,7 +157,7 @@ namespace BLambda.HolaMundo
             app.UseRouting();
 
             //app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

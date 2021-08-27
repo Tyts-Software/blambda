@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLambda.HolaMundo.Helper
 {
+    /// <summary>
+    /// That's just not really вдалий example of ValueProvider implementation
+    /// </summary>
+
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class UpperCaseAttribute : Attribute, IBindingSourceMetadata//, IModelNameProvider//, IFromRouteMetadata
     {
