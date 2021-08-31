@@ -1,44 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<LangVersion>9.0</LangVersion>
-		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-		<AWSProjectType>Lambda</AWSProjectType>
-		<!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<Import Project="..\..\build\Api.props" />
 
-		<Nullable>enable</Nullable>
-		<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<NoWarn>$(NoWarn);1591</NoWarn>
-		
-		<!--<PublishReadyToRun>true</PublishReadyToRun>
-		<TieredCompilation>false</TieredCompilation>
-		<TieredCompilationQuickJit>false</TieredCompilationQuickJit>
-		<PublishTrimmed>true</PublishTrimmed>
-		<InvariantGlobalization>true</InvariantGlobalization>
-		<TrimMode>link</TrimMode>
-		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
-		<EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
-		<EventSourceSupport>false</EventSourceSupport>
-		<DebuggerSupport>false</DebuggerSupport>-->
-	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Helper\JsonConverter\StatJsonConverter.cs" />
 	  <Compile Remove="Helper\NSwag\MarkAsRequiredIfNonNullableSchemaProcessor.cs" />
 	  <Compile Remove="Helper\ValueProvider\UpperCaseValueProvider.cs" />
 	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.3" />
-		<PackageReference Include="Amazon.Lambda.Logging.AspNetCore" Version="3.1.0" />
-		<PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.56" />
-		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.1" />		
+
+	<!--<ItemGroup>
 		<PackageReference Include="NSwag.AspNetCore" Version="13.13.2" />
-		<PackageReference Include="System.Text.Json" Version="5.0.2" />
-		<PackageReference Include="System.Linq.Async" Version="5.0.0" />
-		<!--<PackageReference Include="System.Linq.Async.Queryable" Version="5.0.0" />-->		
-	</ItemGroup>	
+	</ItemGroup>-->
 
 	<Import Project="..\..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
 	<Import Project="..\..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\build\NSwag.targets" />
 </Project>

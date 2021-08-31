@@ -17,16 +17,16 @@ if ($prod) {
 }
 
 # const
-$deploy = ".\_deploy"
+$deploy = "..\_deploy"
 $deployPackages = "$deploy\packages"
 $deployShall = "$deploy\shall"
 $willPackage = "$deployPackages\BLambda.Will.zip"
 $holaPackage = "$deployPackages\BLambda.HolaMundo.zip"
 $templates = "$deploy\templates"
 
-$shallPath = ".\src\BLambda.Shall"
-$willPath = ".\src\BLambda.Will"
-$holaPath = ".\src\BLambda.HolaMundo"
+$shallPath = "..\src\BLambda.Shall"
+$willPath = "..\src\BLambda.Will"
+$holaPath = "..\src\BLambda.HolaMundo"
 
 Write-Host "Set profile..."
 setx AWS_PROFILE $profile | Out-Null
@@ -38,7 +38,7 @@ setx SAM_CLI_TELEMETRY 0 | Out-Null
 if ($cleanup) {
 	#clean up binaries
 	Write-Host "Cleaning up binaries..."
-	Get-ChildItem .\ -include bin,obj -Recurse | ForEach-Object ($_) { Remove-Item $_.FullName -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null }
+	Get-ChildItem ..\src\ -include bin,obj -Recurse | ForEach-Object ($_) { Remove-Item $_.FullName -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null }
 	Remove-Item -LiteralPath $deploy -Force -Recurse  -ErrorAction SilentlyContinue | Out-Null
 }
 

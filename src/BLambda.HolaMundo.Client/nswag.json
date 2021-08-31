@@ -3,12 +3,12 @@
     "defaultVariables": null,
     "documentGenerator": {
         "aspNetCoreToOpenApi": {
-            "project": "../BLambda.HolaMundo/BLambda.HolaMundo.csproj",
+            "project": "$(Api)",
             "msBuildProjectExtensionsPath": null,
-            "configuration": null,
+            "configuration": "$(Config)",
             "runtime": null,
             "targetFramework": null,
-            "noBuild": false,
+            "noBuild": true,
             "msBuildOutputPath": null,
             "verbose": true,
             "workingDirectory": null,

@@ -1,24 +1,20 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Mime;
-using System.Threading;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DocumentModel;
-using BLambda.HolaMundo.Domain;
 using BLambda.HolaMundo.Domain.Seed;
 using BLambda.HolaMundo.Domain.TemperatureLog;
 using BLambda.HolaMundo.Helper;
 using Ddd.DynamoDb;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+
+#if GENERATE_API_CLIENT
 using NJsonSchema.Annotations;
 using NSwag.Annotations;
+#endif
 
 namespace BLambda.HolaMundo.Controllers
 {
@@ -67,7 +63,7 @@ namespace BLambda.HolaMundo.Controllers
         }
 
         // GET api/temperature/vlc/2021
-        [OpenApiIgnore()]
+        [OpenApiIgnore] 
         [HttpGet("{location}/{date:yyyy}")]
         public async Task<YearStat?> GetYearSummary([UpperCase] string location, string date)
         {
@@ -75,7 +71,7 @@ namespace BLambda.HolaMundo.Controllers
         }
 
         // GET api/temperature/vlc/2021-07
-        [OpenApiIgnore()]
+        [OpenApiIgnore]
         [HttpGet("{location}/{date:yyyy-MM}")]
         public async Task<MonthStat?> GetMonthSummary([UpperCase] string location, string date)
         {

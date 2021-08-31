@@ -5,12 +5,9 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{595273AF-2810-4A98-9A59-778BB3AED32E}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
 		..\cdk.json = ..\cdk.json
-		..\delete-stack.ps1 = ..\delete-stack.ps1
-		..\deploy-stack.ps1 = ..\deploy-stack.ps1
-		..\Directory.Build.props = ..\Directory.Build.props
-		..\publish.ps1 = ..\publish.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Will", "BLambda.Will\BLambda.Will.csproj", "{D940B10E-F9F6-4BA5-A319-83761F157633}"
@@ -32,7 +29,20 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.Abstructions.Shared", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.DynamoDb.Shared", "..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.shproj", "{318C9AB5-7C50-4866-BFBE-1514BE644992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLambda.HolaMundo.Client", "BLambda.HolaMundo.Client\BLambda.HolaMundo.Client.csproj", "{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.HolaMundo.Client", "BLambda.HolaMundo.Client\BLambda.HolaMundo.Client.csproj", "{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9B212FB8-BEB4-4947-A53B-AEE7EA15266C}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\Api.props = ..\build\Api.props
+		..\build\AspNetCore.props = ..\build\AspNetCore.props
+		..\build\build-client.ps1 = ..\build\build-client.ps1
+		..\build\Commons.props = ..\build\Commons.props
+		..\build\delete-stack.ps1 = ..\build\delete-stack.ps1
+		..\build\deploy.ps1 = ..\build\deploy.ps1
+		..\build\NSwag.targets = ..\build\NSwag.targets
+		..\build\publish.ps1 = ..\build\publish.ps1
+		..\build\refreshenv.ps1 = ..\build\refreshenv.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

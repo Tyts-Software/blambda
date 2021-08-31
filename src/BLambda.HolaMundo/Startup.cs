@@ -97,17 +97,10 @@ namespace BLambda.HolaMundo
                 }                
             });
 
+#if GENERATE_API_CLIENT
             // Register the Swagger services
-            services.AddSwaggerDocument(d =>
-            {
-                //d.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
-
-                d.RequireParametersWithoutDefault = true;
-                //d.AllowReferencesWithProperties = true;
-
-                //prevent the required fields from accepting null as a value
-                d.DefaultReferenceTypeNullHandling = NJsonSchema.Generation.ReferenceTypeNullHandling.NotNull;
-            });
+           services.AddNSwag();
+#endif
 
             // Health check 
             services.AddHealthChecks();

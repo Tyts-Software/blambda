@@ -1,8 +1,8 @@
 param ($profile='blambda-dev', $domain='blambda', $configuration='Release')
 
 # Publish frontend
-$deploy = ".\_deploy\shall"
-$shall = ".\src\BLambda.Shall"
+$deploy = "..\_deploy\shall"
+$shall = "..\src\BLambda.Shall"
 
 New-Item -Path $deploy -ItemType Directory -Force
 dotnet publish $shall --output $deploy -c $configuration

@@ -1,0 +1,10 @@
+<Project>
+	<Import Project="..\build\AspNetCore.props" />
+	<!--<Import Project="..\build\Commons.props" />-->
+	<PropertyGroup>
+		<TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+		<BlazorVersion>5.0.7</BlazorVersion>
+		<EntityFrameworkVersion>5.0.0</EntityFrameworkVersion>
+		<SystemNetHttpJsonVersion>5.0.0</SystemNetHttpJsonVersion>
+	</PropertyGroup>
+</Project>

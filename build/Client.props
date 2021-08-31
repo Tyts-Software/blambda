@@ -1,0 +1,5 @@
+<Project>
+	<PropertyGroup>
+		<GenerateApiClient>true</GenerateApiClient>
+	</PropertyGroup>
+</Project>
