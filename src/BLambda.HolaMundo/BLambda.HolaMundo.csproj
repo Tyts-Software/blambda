@@ -3,15 +3,14 @@
 
 	<ItemGroup>
 	  <Compile Remove="Helper\JsonConverter\StatJsonConverter.cs" />
-	  <Compile Remove="Helper\NSwag\MarkAsRequiredIfNonNullableSchemaProcessor.cs" />
 	  <Compile Remove="Helper\ValueProvider\UpperCaseValueProvider.cs" />
 	</ItemGroup>
 
 	<!--<ItemGroup>
 		<PackageReference Include="NSwag.AspNetCore" Version="13.13.2" />
 	</ItemGroup>-->
-
-	<Import Project="..\..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
-	<Import Project="..\..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\..\ddd\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\..\ddd\Infrastructure\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
+	<Import Project="..\..\..\ddd\Application\Ddd.HttpApi.Shared\Ddd.HttpApi.Shared.projitems" Label="Shared" />
 	<Import Project="..\..\build\NSwag.targets" />
 </Project>

@@ -12,4 +12,8 @@
     <PackageReference Include="System.Net.Http.Json" Version="$(SystemNetHttpJsonVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BLambda.HolaMundo.Client\BLambda.HolaMundo.Client.csproj" />
+  </ItemGroup>
+
 </Project>

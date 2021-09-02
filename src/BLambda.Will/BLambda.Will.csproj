@@ -44,5 +44,4 @@
 	</ItemGroup>
 
 	<Import Project="..\..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems" Label="Shared" />
-	<Import Project="..\..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems" Label="Shared" />
 </Project>

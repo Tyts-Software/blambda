@@ -1,3 +1,4 @@
+using BLambda.Shall.Extensions;
 using BLambda.Shall.Service.Weather;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,9 +21,8 @@ namespace BLambda.Shall
 
             builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //builder.Services.AddHttpClient<IWeatherService, WeatherService>(x => x.BaseAddress = new Uri("http://localhost:8090"));
-            builder.Services.AddHttpClient<IWeatherService, WeatherService>(client => client.BaseAddress = new Uri(builder.Configuration["WeatherApiUrl"]));
+            builder.Services.AddApis(builder.Configuration.GetSection("Modules"));
+            
 
             await builder.Build().RunAsync();
         }

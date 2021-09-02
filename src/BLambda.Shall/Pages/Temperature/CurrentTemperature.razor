@@ -1,0 +1,57 @@
+﻿@page "/temperature/current"
+@using BLambda.HolaMundo.Client
+@inject TemperatureClient Http
+
+<h1>Current Temperature</h1>
+
+<p>.</p>
+
+@if (stats == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stat in stats)
+            {
+                <tr>
+                    <td>@stat.Location</td>
+                    <td>@stat.Date.ToLocalTime().Date.ToShortDateString()</td>
+                    <td>@stat.Cur</td>
+                    <td>@stat.Stat.Min</td>
+                    <td>@stat.Stat.Max</td>
+                    <td>@stat.Stat.Avg</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<LocationStat> stats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+             stats = await Http.GetAllCurrentAsync();
+        }
+        catch(Exception e)
+        {
+            
+        }
+       
+    }
+}

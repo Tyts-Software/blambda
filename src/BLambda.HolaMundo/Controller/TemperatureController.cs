@@ -7,6 +7,7 @@ using BLambda.HolaMundo.Domain.Seed;
 using BLambda.HolaMundo.Domain.TemperatureLog;
 using BLambda.HolaMundo.Helper;
 using Ddd.DynamoDb;
+using Ddd.HttpApi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,7 @@ namespace BLambda.HolaMundo.Controllers
 {
     //[ApiController]
     [Route("api/[controller]")]
-    public class TemperatureController : ControllerBase
+    public class TemperatureController : HttpApiController
     {
         private readonly ILogger<TemperatureController> logger;
         private readonly ITemperatureLogRepository temperatureLog;

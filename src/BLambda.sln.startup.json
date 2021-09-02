@@ -5,7 +5,7 @@
 {
     /*  Configuration File Version  */
     "Version": 3,
-    
+
     /*  Create an item in the dropdown list for each project in the solution?  */
     "ListAllProjects": true,
 
@@ -51,14 +51,18 @@
           }
         }
     */
-  "MultiProjectConfigurations": {
-    "Shell + Will": {
-      "Projects": {
-        "BLambda.Shall": {},
-        "BLambda.Will": {}
-      }
+    "MultiProjectConfigurations": {
+        "Shell + Will": {
+            "Projects": {
+                "BLambda.Shall": {},
+                "BLambda.Will": {}
+            }
+        },
+        "Shell + Hola": {
+            "Projects": {
+                "BLambda.Shall": {},
+                "BLambda.HolaMundo": {}
+            }
+        }
     }
-
-
-  }
 }

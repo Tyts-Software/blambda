@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.Provision", "Blambd
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.Abstructions.Shared", "..\..\Ddd\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.shproj", "{B562E115-CD7D-4127-AED6-E66BA3138F9A}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.DynamoDb.Shared", "..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.shproj", "{318C9AB5-7C50-4866-BFBE-1514BE644992}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLambda.HolaMundo.Client", "BLambda.HolaMundo.Client\BLambda.HolaMundo.Client.csproj", "{FFC3BA49-C18D-49B7-9693-B62CAA1223BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9B212FB8-BEB4-4947-A53B-AEE7EA15266C}"
@@ -44,14 +42,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9B212FB8
 		..\build\refreshenv.ps1 = ..\build\refreshenv.ps1
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.DynamoDb.Shared", "..\..\ddd\Infrastructure\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.shproj", "{318C9AB5-7C50-4866-BFBE-1514BE644992}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ddd.HttpApi.Shared", "..\..\ddd\Application\Ddd.HttpApi.Shared\Ddd.HttpApi.Shared.shproj", "{0810952B-F712-4E9E-A401-E14FD9570E86}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{318c9ab5-7c50-4866-bfbe-1514be644992}*SharedItemsImports = 13
-		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{b562e115-cd7d-4127-aed6-e66ba3138f9a}*SharedItemsImports = 13
-		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
-		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\ddd\Application\Ddd.HttpApi.Shared\Ddd.HttpApi.Shared.projitems*{0810952b-f712-4e9e-a401-e14fd9570e86}*SharedItemsImports = 13
+		..\..\ddd\Infrastructure\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{318c9ab5-7c50-4866-bfbe-1514be644992}*SharedItemsImports = 13
+		..\..\Ddd\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.projitems*{b562e115-cd7d-4127-aed6-e66ba3138f9a}*SharedItemsImports = 13
+		..\..\ddd\Application\Ddd.HttpApi.Shared\Ddd.HttpApi.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\Ddd\Ddd.Abstructions.Shared\Ddd.Abstructions.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
+		..\..\ddd\Infrastructure\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{c9e6288a-ee92-471c-8602-8578c7190f0b}*SharedItemsImports = 5
 		..\..\Ddd\Ddd.Abstructions.Shared\Abstructions.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
-		..\..\Ddd\Ddd.DynamoDb.Shared\Ddd.DynamoDb.Shared.projitems*{d940b10e-f9f6-4ba5-a319-83761f157633}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +110,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B562E115-CD7D-4127-AED6-E66BA3138F9A} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
 		{318C9AB5-7C50-4866-BFBE-1514BE644992} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
+		{0810952B-F712-4E9E-A401-E14FD9570E86} = {0F7CF599-8CDF-4D92-9A00-D133148631FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {176CE588-1B16-4612-B4D5-25EA9E3D425A}

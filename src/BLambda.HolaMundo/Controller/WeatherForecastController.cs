@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLambda.HolaMundo.Domain;
+using Ddd.HttpApi;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BLambda.HolaMundo.Controllers
 {
     [Route("api/[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : HttpApiController
     {
         private readonly IWeatherForecastRepository repository;
 
